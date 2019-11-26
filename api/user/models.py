@@ -35,7 +35,7 @@ class Achievement(models.Model):
 class Dynamics(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     time = models.DateTimeField(default=datetime.now)
-    text = models.TextField(null=True, blank=True)
+    text = models.TextField(max_length=400, blank=True, null=True)
     picture = models.CharField(max_length=128, blank=True, null=True)
 
     class Meta:

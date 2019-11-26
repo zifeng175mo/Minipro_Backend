@@ -2,14 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="85274a36-e847-4ef8-ae84-16bd0b734d05" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/api/province/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/innovation.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/innovation.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/api/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/project/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/project/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/project/wsgi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/manage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/province/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/province/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/province/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/province/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user/models.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -52,6 +68,8 @@
       <workItem from="1574508014727" duration="1855000" />
       <workItem from="1574591728111" duration="831000" />
       <workItem from="1574598943587" duration="4891000" />
+      <workItem from="1574766572901" duration="2436000" />
+      <workItem from="1574769355450" duration="4561000" />
     </task>
     <servers />
   </component>
