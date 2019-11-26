@@ -14,10 +14,14 @@ def get_poem(request):
     province = request.GET.get('province')
     if not province:
         return JsonResponse({'status': False, 'error': '省份不存在'})
-    print(province)
-    poem_name = Province.objects.all()[0].poem_name
-    poem_content = Province.objects.all()[0].poem_content
-    author = Province.objects.all()[0].author
-    translation = Province.objects.all()[0].translation
-    return JsonResponse({'status': True, 'poem_name': poem_name, 'poem_content': poem_content, 'author': author,
-                         'translation': translation})
+    province = Province.objects.filter(name=province)
+    province = province[0]
+    name_ch = province.name_ch
+    poem_name = province.poem_name
+    poem_content = province.poem_content
+    author = province.author
+    translation = province.translation
+    introduction = province.introduction
+    return JsonResponse(
+        {'status': True, 'name': name_ch, 'poem_name': poem_name, 'poem_content': poem_content, 'author': author,
+         'translation': translation, 'introduction': introduction})

@@ -4,6 +4,7 @@ from django.db import models
 # Create your models here.
 class Province(models.Model):
     name = models.CharField(max_length=40, blank=True, null=True)
+    name_ch = models.CharField(max_length=10, blank=True, null=True)
     poem_name = models.CharField(max_length=40, blank=True, null=True)
     poem_content = models.TextField(blank=True, null=True)
     author = models.CharField(max_length=20, blank=True, null=True)
