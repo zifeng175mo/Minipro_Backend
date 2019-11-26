@@ -5,7 +5,7 @@ from django.db import models
 class Province(models.Model):
     name = models.CharField(max_length=40, blank=True, null=True)
     poem_name = models.CharField(max_length=40, blank=True, null=True)
-    poem_content = models.TextField(max_length=200, blank=True, null=True)
+    poem_content = models.TextField(blank=True, null=True)
     author = models.CharField(max_length=20, blank=True, null=True)
     translation = models.TextField(blank=True, null=True)
     introduction = models.TextField(blank=True, null=True)
