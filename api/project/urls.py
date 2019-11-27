@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from province.urls import PROVINCE_URL
 from user.urls import USER_URL
+from ws.routing import WEBSOCKET_URL
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-] + PROVINCE_URL + USER_URL
+] + PROVINCE_URL + USER_URL + WEBSOCKET_URL

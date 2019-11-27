@@ -16,8 +16,8 @@ def register_user(request):
     if not user:
         address = data.get('country') + ' ' + data.get('province') + ' ' + data.get('city')
         user = User(openid=user_id, name=data.get('nickName'), avatar=data.get('avatarUrl'),
-                    address=data.get('country') + data.get('province') + data.get('city'))
+                    address=address)
         user.save()
         return JsonResponse({'status': True})
     else:
-        return JsonResponse({'status': False})
+        return JsonResponse({'status': False, 'openid': user_id})
