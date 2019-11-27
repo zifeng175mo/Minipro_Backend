@@ -3,7 +3,7 @@ import json
 import django
 from django.contrib.auth import authenticate
 from django.db.models import Q
-from django.http import HttpRequest, JsonResponse
+from django.http import JsonResponse
 
 from province.models import Province
 

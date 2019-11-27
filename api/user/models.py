@@ -18,6 +18,7 @@ class User(models.Model):
 
     def __str__(self):
         return self.name if self.name else 'None'
+    objects = models.Manager()
 
 
 class Achievement(models.Model):
