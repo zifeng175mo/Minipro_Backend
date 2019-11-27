@@ -7,6 +7,7 @@ from province.models import Province
 
 
 class User(models.Model):
+    openid = models.CharField(max_length=100,blank=True, null=True)
     name = models.CharField(max_length=40, blank=True, null=True)
     address = models.TextField(max_length=128, blank=True, null=True)
     avatar = models.CharField(max_length=128, blank=True, null=True)

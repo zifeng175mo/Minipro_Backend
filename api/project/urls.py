@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from province.urls import PROVINCE_URL
+from user.urls import USER_URL
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-] + PROVINCE_URL
+] + PROVINCE_URL + USER_URL
