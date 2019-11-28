@@ -1,3 +1,5 @@
+import json
+
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import AsyncJsonWebsocketConsumer, AsyncWebsocketConsumer
 
@@ -12,7 +14,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         try:
             ChatConsumer.chats[self.group_name].add(self)
         except:
-            ChatConsumer.chats[self.group_name] = set([self])
+            ChatConsumer.chats[self.group_name] = {self}
         # print(ChatConsumer.chats)
         # 创建连接时调用
         await self.accept()
@@ -25,33 +27,30 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         ChatConsumer.chats[self.group_name].remove(self)
         await self.close()
 
-        async def receive_json(self, message, **kwargs):
-            # 收到信息时调用
-            to_user = message.get('to_user')
-            # 信息发送
-            length = len(ChatConsumer.chats[self.group_name])
-            if length == 2:
-                await self.channel_layer.group_send(
-                    self.group_name,
-                    {
-                        "type": "chat.message",
-                        "message": message.get('message'),
-                    },
-                )
-            else:
-                await self.channel_layer.group_send(
-                    to_user,
-                    {
-                        "type": "push.message",
-                        "event": {'message': message.get('message'), 'group': self.group_name}
-                    },
-                )
+    async def receive_json(self, message, **kwargs):
+        # 收到信息时调用
+        print(message)
+        # 信息发送
+        length = len(ChatConsumer.chats[self.group_name])
+        await self.channel_layer.group_send(
+            self.group_name,
+            {
+                'type': 'chat.message',
+                'user_name': message.get('user_name'),
+                'user_id': message.get('user_id'),
+                'content': message.get('content'),
+                'time': message.get('time')
+            },
+        )
 
-        async def chat_message(self, event):
-            # Handles the "chat.message" event when it's sent to us.
-            await self.send_json({
-                "message": event["message"],
-            })
+    async def chat_message(self, event):
+        # Handles the 'chat.message' event when it's sent to us.
+        await self.send_json({
+            'user_name': event['user_name'],
+            'user_id': event['user_id'],
+            'content': event['content'],
+            'time': event['time']
+        })
 
 
 # 推送consumer
@@ -78,5 +77,5 @@ class PushConsumer(AsyncWebsocketConsumer):
     async def push_message(self, event):
         print(event)
         await self.send(text_data=json.dumps({
-            "event": event['event']
+            'event': event['event']
         }))
