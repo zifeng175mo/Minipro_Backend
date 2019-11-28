@@ -1,4 +1,4 @@
-from datetime import datetime
+import time
 
 from django.db import models
 
@@ -37,7 +37,7 @@ class Achievement(models.Model):
 
 class Dynamics(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    time = models.DateTimeField(default=datetime.now)
+    time = models.CharField(max_length=50, default=int(time.time()))
     text = models.TextField(max_length=400, blank=True, null=True)
 
     class Meta:
