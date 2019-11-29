@@ -3,13 +3,20 @@
   <component name="ChangeListManager">
     <list default="true" id="85274a36-e847-4ef8-ae84-16bd0b734d05" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/api/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -20,7 +27,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="D:/new/backend" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -52,6 +59,18 @@
       <workItem from="1574508014727" duration="1855000" />
       <workItem from="1574591728111" duration="831000" />
       <workItem from="1574598943587" duration="4891000" />
+      <workItem from="1574766572901" duration="2436000" />
+      <workItem from="1574769355450" duration="7505000" />
+      <workItem from="1574819811729" duration="1764000" />
+      <workItem from="1574834353419" duration="1804000" />
+      <workItem from="1574845714891" duration="19135000" />
+      <workItem from="1574906196351" duration="850000" />
+      <workItem from="1574914051452" duration="3872000" />
+      <workItem from="1574920464893" duration="2276000" />
+      <workItem from="1574934660120" duration="2214000" />
+      <workItem from="1574943350639" duration="11371000" />
+      <workItem from="1574989149175" duration="734000" />
+      <workItem from="1575007302063" duration="4112000" />
     </task>
     <servers />
   </component>

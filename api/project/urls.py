@@ -1,4 +1,4 @@
-"""api URL Configuration
+"""project URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from province.urls import PROVINCE_URL
+from user.urls import USER_URL
+from ws.routing import WEBSOCKET_URL
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-]
+    path('admin/', admin.site.urls, name='admin'),
+] + PROVINCE_URL + USER_URL + WEBSOCKET_URL
