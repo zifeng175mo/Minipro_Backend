@@ -27,7 +27,14 @@ def register_user(request):
 
 def get_dynamics(request):
     page = request.GET.get('page')
-    query = Dynamics.objects.all()
+    user_id = request.GET.get('id')
+    if not user_id:
+        query = Dynamics.objects.all()
+    else:
+        user = User.objects.filter(openid=user_id)
+        if user:
+            user = user[0]
+        query = Dynamics.objects.filter(user=user)
     dynamics = list(query)
     if not query:
         return JsonResponse({'status': True, 'data': []})
