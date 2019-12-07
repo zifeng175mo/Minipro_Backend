@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="85274a36-e847-4ef8-ae84-16bd0b734d05" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/user/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,7 +30,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="D:/new/backend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -71,6 +74,10 @@
       <workItem from="1574943350639" duration="11371000" />
       <workItem from="1574989149175" duration="734000" />
       <workItem from="1575007302063" duration="4112000" />
+      <workItem from="1575017317426" duration="1352000" />
+      <workItem from="1575025554072" duration="3849000" />
+      <workItem from="1575035940050" duration="2788000" />
+      <workItem from="1575686789296" duration="5242000" />
     </task>
     <servers />
   </component>

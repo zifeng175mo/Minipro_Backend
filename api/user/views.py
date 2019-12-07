@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from datetime import datetime
 from user.util import get_page
 
-from user.models import User, Dynamics, DynamicsPicture
+from user.models import User, Dynamics, DynamicsPicture, Comment
 
 
 # Create your views here.
@@ -40,15 +40,18 @@ def get_dynamics(request):
         return JsonResponse({'status': True, 'data': []})
     dynamics, total_page = get_page(dynamics, page)
     dynamics_list = []
-    print(dynamics)
     for item in dynamics:
         dynamic = {}
         pictures = DynamicsPicture.objects.filter(dynamics=item)
+        comment_count = Comment.objects.filter(dynamics=item).count()
+        dynamic['id'] = item.id
         dynamic['user'] = item.user.name
         dynamic['avatar'] = item.user.avatar
         dynamic['time'] = item.time
         dynamic['text'] = item.text
         dynamic['image'] = [picture.img for picture in pictures]
+        dynamic['like_count'] = item.like
+        dynamic['comment_count'] = comment_count
         dynamics_list.append(dynamic)
     return JsonResponse({'data': dynamics_list, 'status': True, 'total_page': total_page})
 
@@ -64,3 +67,41 @@ def add_dynamic(request):
     dynamic = Dynamics(user=user, text=data.get('text'))
     dynamic.save()
     return JsonResponse({'status': True})
+
+
+def get_comments(request):
+    id = request.GET.get('id')
+    dynamic = Dynamics.objects.filter(id=id)
+    if not dynamic:
+        return JsonResponse({'status': False, 'error': '未找到该动态'})
+    else:
+        dynamic = dynamic[0]
+    comments = list(Comment.objects.filter(dynamics=dynamic))
+    comments_list = []
+    for item in comments:
+        comment = {'id': item.id, 'user': item.user.name, 'avatar': item.user.avatar, 'text': item.text,
+                   'time': item.time, 'reply': item.reply}
+        comments_list.append(comment)
+    return JsonResponse({'data': comments_list, 'status': True})
+
+
+def add_comment(request):
+    data = json.loads(request.body)
+    if not data:
+        return JsonResponse({'status': False, 'error': '数据错误'})
+    else:
+        user_id = data.get('user')
+        user = User.objects.filter(openid=user_id)
+        if not user:
+            return JsonResponse({'status': False, 'error': '找不到该用户'})
+        else:
+            user = user[0]
+        dynamic_id = data.get('id')
+        dynamic = Dynamics.objects.filter(id=dynamic_id)
+        if not dynamic:
+            return JsonResponse({'status': False, 'error': '找不到该动态'})
+        else:
+            dynamic = dynamic[0]
+        new_comment = Comment(user=user, dynamics=dynamic, reply=data.get('reply'), text=data.get('text'))
+        new_comment.save()
+        return JsonResponse({'status': True})
