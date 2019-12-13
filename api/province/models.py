@@ -19,3 +19,22 @@ class Province(models.Model):
         return self.name if self.name else 'None'
 
     objects = models.Manager()
+
+
+class Test(models.Model):
+    province = models.ForeignKey(Province, on_delete=models.CASCADE)
+    question = models.TextField(blank=True, null=False)
+    option_A = models.TextField(blank=True, null=False)
+    option_B = models.TextField(blank=True, null=False)
+    option_C = models.TextField(blank=True, null=False)
+    option_D = models.TextField(blank=True, null=False)
+    answer = models.CharField(max_length=10, blank=True, null=False)
+
+    class Meta:
+        verbose_name = '题目'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.province.name + '的题目'
+
+    objects = models.Manager()

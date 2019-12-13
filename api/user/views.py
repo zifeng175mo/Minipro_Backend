@@ -5,9 +5,19 @@ from django.contrib.auth import authenticate
 from django.db.models import Q
 from django.http import JsonResponse
 from datetime import datetime
-from user.util import get_page
+from user.util import get_page, judge_allgone
 
-from user.models import User, Dynamics, DynamicsPicture, Comment
+from user.models import User, Dynamics, DynamicsPicture, Comment, Gone, Achievement
+from province.models import Province
+
+all_provinces = ['shanxi', 'chongqing', 'sichuan', 'hubei', 'jiangsu', 'hunan', 'jiangxi', 'anhui', 'zhejiang',
+                 'guangdong',
+                 'guangxi', 'yunnan', 'henan', 'shandong', 'sxi', 'gansu', 'xinjiang', 'neimenggu', 'ningxia',
+                 'beijing',
+                 'shanghai', 'tianjin', 'heilongjiang', 'jilin', 'liaoning', 'hebei', 'qinghai', 'xizang', 'fujian',
+                 'hainan', 'xianggang', 'guizhou', 'taiwan']
+
+achievements = ['小试牛刀', '诗词之王']
 
 
 # Create your views here.
@@ -20,9 +30,14 @@ def register_user(request):
         user = User(openid=user_id, name=data.get('nickName'), avatar=data.get('avatarUrl'),
                     address=address)
         user.save()
+        for item in all_provinces:
+            province = Province.objects.get(name=item)
+            Gone(user=user, province=province).save()
+        for achievement in achievements:
+            Achievement(name=achievement, user=user).save()
         return JsonResponse({'status': True})
     else:
-        return JsonResponse({'status': False, 'openid': user_id})
+        return JsonResponse({'status': True, 'openid': user_id})
 
 
 def get_dynamics(request):
@@ -105,3 +120,65 @@ def add_comment(request):
         new_comment = Comment(user=user, dynamics=dynamic, reply=data.get('reply'), text=data.get('text'))
         new_comment.save()
         return JsonResponse({'status': True})
+
+
+def finish_test(request):
+    data = json.loads(request.body)
+    user_id = data.get('user_id')
+    user = User.objects.filter(openid=user_id)
+    province_name = data.get('province')
+    if not user:
+        return JsonResponse({'status': False, 'error': '找不到该用户'})
+    else:
+        user = user[0]
+        province = Province.objects.get(name=province_name)
+        gone = Gone.objects.filter(user=user, province=province)
+        if not gone:
+            return JsonResponse({'status': False, 'error': '查询成就失败'})
+        else:
+            gone = gone[0]
+            gone.gone = True
+            gone.save()
+            if Gone.objects.filter(user=user, gone=True).count() == 1:
+                first_achievement = Achievement.objects.get(user=user, name='小试牛刀')
+                first_achievement.achieved = True
+                first_achievement.save()
+            if judge_allgone(user):
+                all_gone_achievement = Achievement.objects.get(user=user, name='诗词之王')
+                all_gone_achievement.achieved = True
+                all_gone_achievement.save()
+            return JsonResponse({'status': True, 'passed': province_name})
+
+
+def get_gone(request):
+    user_id = request.GET.get('user_id')
+    user = User.objects.filter(openid=user_id)
+    if not user:
+        return JsonResponse({'status': False, 'error': '未找到该用户'})
+    else:
+        user = user[0]
+        gone_provinces = Gone.objects.filter(user=user)
+        gone_list = []
+        for item in gone_provinces:
+            if item.gone:
+                gone_list.append({
+                    'province': item.province.name_ch
+                })
+        return JsonResponse({'status': True, 'data': gone_list})
+
+
+def get_achievement(request):
+    user_id = request.GET.get('user_id')
+    user = User.objects.filter(openid=user_id)
+    if not user:
+        return JsonResponse({'status': False, 'error': '未找到该用户'})
+    else:
+        user = user[0]
+        all_achievements = Achievement.objects.filter(user=user)
+        achievement_list = []
+        for achievement in all_achievements:
+            achievement_list.append({
+                'achievement': achievement.name,
+                'achieved': achievement.achieved
+            })
+        return JsonResponse({'status': True, 'data': achievement_list})

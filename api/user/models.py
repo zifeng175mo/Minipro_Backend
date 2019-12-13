@@ -80,6 +80,7 @@ class Gone(models.Model):
 
     def __str__(self):
         return str(self.user.name) + '去过' + str(self.province.name)
+    objects = models.Manager()
 
 
 class Achievement(models.Model):
@@ -92,4 +93,6 @@ class Achievement(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.name if self.name else 'None'
+        return self.user.name + self.name
+
+    objects = models.Manager()

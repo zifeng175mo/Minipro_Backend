@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate
 from django.db.models import Q
 from django.http import JsonResponse
 
-from province.models import Province
+from province.models import Province, Test
 
 
 # Create your views here.
@@ -25,3 +25,25 @@ def get_poem(request):
     return JsonResponse(
         {'status': True, 'name': name_ch, 'poem_name': poem_name, 'poem_content': poem_content, 'author': author,
          'translation': translation, 'introduction': introduction})
+
+
+def get_test(request):
+    province = request.GET.get('province')
+    if not province:
+        return JsonResponse({'status': False, 'error': '省份不存在'})
+    province = Province.objects.filter(name=province)
+    province = province[0]
+    test_list = []
+    test = Test.objects.filter(province=province)
+    if not test:
+        return JsonResponse({'status': False, 'error': '未查到相关题库'})
+    else:
+        for index in test:
+            test_list.append({
+                'question': index.question,
+                'options': [
+                    index.option_A, index.option_B, index.option_C, index.option_D
+                ],
+                'answer': index.answer
+            })
+    return JsonResponse({'status': True, 'data': test_list})
