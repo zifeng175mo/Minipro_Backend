@@ -1,5 +1,5 @@
 from user.models import User, Dynamics, DynamicsPicture, Comment, Gone
-from province.models import Province
+import random
 
 
 def get_page(query, page: int, page_size: int = 3) -> (all, int):
@@ -23,3 +23,17 @@ def judge_allgone(user):
         return True
     else:
         return False
+
+
+def generate_random_str(length=32):
+    str_token = []
+    for char in range(ord('0'), ord('9') + 1):
+        str_token.append(chr(char))
+    for char in range(ord('a'), ord('z') + 1):
+        str_token.append(chr(char))
+    for char in range(ord('A'), ord('Z') + 1):
+        str_token.append(chr(char))
+    result_str = ""
+    for _ in range(length):
+        result_str += str_token[random.randint(0, len(str_token) - 1)]
+    return result_str

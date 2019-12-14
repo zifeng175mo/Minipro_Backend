@@ -26,7 +26,6 @@ class Dynamics(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     time = models.CharField(max_length=50, default=int(time.time()))
     text = models.TextField(max_length=400, blank=True, null=True)
-    like = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = '动态'
@@ -34,6 +33,21 @@ class Dynamics(models.Model):
 
     def __str__(self):
         return str(self.user.name) + '的动态'
+
+    objects = models.Manager()
+
+
+class DynamicsLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    dynamics = models.ForeignKey(Dynamics, on_delete=models.CASCADE)
+    like = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = '点赞'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.user.name + '的点赞'
 
     objects = models.Manager()
 
@@ -80,6 +94,7 @@ class Gone(models.Model):
 
     def __str__(self):
         return str(self.user.name) + '去过' + str(self.province.name)
+
     objects = models.Manager()
 
 

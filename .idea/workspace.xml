@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="85274a36-e847-4ef8-ae84-16bd0b734d05" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/province/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/province/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/province/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/province/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/province/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/province/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/province/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/province/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/project/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/user/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/user/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user/util.py" afterDir="false" />
@@ -34,7 +33,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="D:/new/backend" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -88,6 +87,9 @@
       <workItem from="1576043456118" duration="1002000" />
       <workItem from="1576051878959" duration="8231000" />
       <workItem from="1576198435242" duration="6123000" />
+      <workItem from="1576216770053" duration="1190000" />
+      <workItem from="1576228788348" duration="3200000" />
+      <workItem from="1576320361073" duration="16779000" />
     </task>
     <servers />
   </component>

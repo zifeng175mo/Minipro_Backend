@@ -1,13 +1,18 @@
+from project.settings import MEDIA_URL
 from django.shortcuts import render
 import django
 import json
+import time
+import os
 from django.contrib.auth import authenticate
 from django.db.models import Q
 from django.http import JsonResponse
 from datetime import datetime
-from user.util import get_page, judge_allgone
 
-from user.models import User, Dynamics, DynamicsPicture, Comment, Gone, Achievement
+from project.settings import MEDIA_ROOT
+from user.util import get_page, judge_allgone, generate_random_str
+
+from user.models import User, Dynamics, DynamicsPicture, Comment, Gone, Achievement, DynamicsLike
 from province.models import Province
 
 all_provinces = ['shanxi', 'chongqing', 'sichuan', 'hubei', 'jiangsu', 'hunan', 'jiangxi', 'anhui', 'zhejiang',
@@ -43,6 +48,10 @@ def register_user(request):
 def get_dynamics(request):
     page = request.GET.get('page')
     user_id = request.GET.get('id')
+    my_id = request.GET.get('my_id')
+    me = User.objects.filter(openid=my_id)
+    if me:
+        me = me[0]
     if not user_id:
         query = Dynamics.objects.all()
     else:
@@ -59,13 +68,22 @@ def get_dynamics(request):
         dynamic = {}
         pictures = DynamicsPicture.objects.filter(dynamics=item)
         comment_count = Comment.objects.filter(dynamics=item).count()
+        like_count = DynamicsLike.objects.filter(dynamics=item, like=True).count()
+        if me:
+            like = DynamicsLike.objects.filter(user=me, dynamics=item)
+            if not like:
+                DynamicsLike(user=me, dynamics=item).save()
+                dynamic['like'] = False
+            else:
+                like = like[0]
+                dynamic['like'] = like.like
         dynamic['id'] = item.id
         dynamic['user'] = item.user.name
         dynamic['avatar'] = item.user.avatar
         dynamic['time'] = item.time
         dynamic['text'] = item.text
-        dynamic['image'] = [picture.img for picture in pictures]
-        dynamic['like_count'] = item.like
+        dynamic['image'] = ['http://localhost:8000' + picture.img for picture in pictures]
+        dynamic['like_count'] = like_count
         dynamic['comment_count'] = comment_count
         dynamics_list.append(dynamic)
     return JsonResponse({'data': dynamics_list, 'status': True, 'total_page': total_page})
@@ -81,6 +99,50 @@ def add_dynamic(request):
         user = user[0]
     dynamic = Dynamics(user=user, text=data.get('text'))
     dynamic.save()
+    return JsonResponse({'status': True, 'id': dynamic.id})
+
+
+def dynamic_like(request):
+    data = json.loads(request.body)
+    user_id = data.get('user_id')
+    dynamic_id = data.get('dynamic_id')
+    user = User.objects.get(openid=user_id)
+    dynamic = Dynamics.objects.get(id=dynamic_id)
+    like = DynamicsLike.objects.filter(user=user, dynamics=dynamic)
+    if not like:
+        DynamicsLike(user=user, dynamics=dynamic, like=True).save()
+    else:
+        like = like[0]
+        if like.like:
+            like.like = False
+            like.save()
+        else:
+            like.like = True
+            like.save()
+    return JsonResponse({'status': True})
+
+
+def upload_image(request):
+    img = request.FILES.get('image')
+    name_list = img.name.split('.')
+    if len(name_list) <= 1:
+        return JsonResponse({'status': False, 'error': '文件名错误'})
+    if name_list[-1].lower() not in ['jpg', 'png', 'jpeg']:
+        return JsonResponse({'status': False, 'error': '文件名错误'})
+    img_name = str(int(time.time() * 1000)) + generate_random_str(3) + '.' + name_list[-1]
+    if not os.path.exists(MEDIA_ROOT):
+        os.mkdir(MEDIA_ROOT)
+    file = open(os.path.join(MEDIA_ROOT, img_name), 'wb')
+    try:
+        for chunk in img.chunks(chunk_size=1024):
+            file.write(chunk)
+    except IOError as error:
+        return JsonResponse({'status': False, 'error': '存储文件错误'})
+    finally:
+        file.close()
+    uploading_id = request.POST.get('id')
+    dynamic = Dynamics.objects.get(id=uploading_id)
+    DynamicsPicture(dynamics=dynamic, img=MEDIA_URL + img_name).save()
     return JsonResponse({'status': True})
 
 
