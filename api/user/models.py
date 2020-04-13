@@ -25,7 +25,7 @@ class User(models.Model):
 class Dynamics(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     time = models.CharField(max_length=50, default=int(time.time()))
-    text = models.TextField(max_length=400, blank=True, null=True)
+    text = models.TextField(max_length=800, blank=True, null=True)
 
     class Meta:
         verbose_name = '动态'

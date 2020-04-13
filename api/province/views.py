@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate
 from django.db.models import Q
 from django.http import JsonResponse
 
-from province.models import Province, Test
+from province.models import Province, Test, Poem
 
 
 # Create your views here.
@@ -16,15 +16,18 @@ def get_poem(request):
         return JsonResponse({'status': False, 'error': '省份不存在'})
     province = Province.objects.filter(name=province)
     province = province[0]
-    name_ch = province.name_ch
-    poem_name = province.poem_name
-    poem_content = province.poem_content
-    author = province.author
-    translation = province.translation
-    introduction = province.introduction
+    poems = Poem.objects.filter(province=province)
+    return_poems = []
+    for poem in poems:
+        return_poems.append({
+            'poem_name': poem.poem_name,
+            'poem_content': poem.poem_content,
+            'author': poem.author,
+            'translation': poem.translation,
+            'introduction': poem.introduction
+            })
     return JsonResponse(
-        {'status': True, 'name': name_ch, 'poem_name': poem_name, 'poem_content': poem_content, 'author': author,
-         'translation': translation, 'introduction': introduction})
+        {'status': True, 'data': return_poems, 'province': province.name_ch})
 
 
 def get_test(request):

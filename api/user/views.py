@@ -4,6 +4,7 @@ import django
 import json
 import time
 import os
+import requests
 from django.contrib.auth import authenticate
 from django.db.models import Q
 from django.http import JsonResponse
@@ -43,6 +44,27 @@ def register_user(request):
         return JsonResponse({'status': True})
     else:
         return JsonResponse({'status': True, 'openid': user_id})
+
+
+def get_userinfo(request):     
+    data = json.loads(request.body)     
+    appid = data.get('appid')     
+    secret = data.get('secret')     
+    code = data.get('code')     
+    info_url = 'https://api.weixin.qq.com/sns/jscode2session?appid={APPID}&secret={SECRET}&js_code={CODE}&grant_type=authorization_code/'     
+    info_url = info_url.format(APPID=appid, SECRET=secret, CODE=code)     
+    info = requests.get(info_url)     
+    return JsonResponse({'data': info.json(), 'status': True})  
+
+
+def get_token(request):
+    data = json.loads(request.body)
+    appid = data.get('appid')
+    secret = data.get('secret')
+    info_url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={APPID}&secret={SECRET}'
+    info_url = info_url.format(APPID=appid, SECRET=secret)
+    info = requests.get(info_url)
+    return JsonResponse({'data': info.json(), 'status': True})
 
 
 def get_dynamics(request):
@@ -146,7 +168,18 @@ def upload_image(request):
     return JsonResponse({'status': True})
 
 
+def test_comment(request):
+    data = json.loads(request.body)
+    token = data.get('token')
+    content = data.get('content')
+    info_url = 'https://api.weixin.qq.com/wxa/msg_sec_check?access_token={}'.format(token)
+    content_data = {"content": content.encode("utf-8").decode("latin1")}
+    info = requests.post(info_url, data=json.dumps(content_data, ensure_ascii=False))
+    return JsonResponse({'data': info.json(), 'status': True})
+
+
 def get_comments(request):
+    page = request.GET.get('page')
     id = request.GET.get('id')
     dynamic = Dynamics.objects.filter(id=id)
     if not dynamic:
@@ -154,12 +187,13 @@ def get_comments(request):
     else:
         dynamic = dynamic[0]
     comments = list(Comment.objects.filter(dynamics=dynamic))
+    comments, total_page = get_page(comments, page)
     comments_list = []
     for item in comments:
         comment = {'id': item.id, 'user': item.user.name, 'avatar': item.user.avatar, 'text': item.text,
                    'time': item.time, 'reply': item.reply}
         comments_list.append(comment)
-    return JsonResponse({'data': comments_list, 'status': True})
+    return JsonResponse({'data': comments_list, 'total_page': total_page, 'status': True})
 
 
 def add_comment(request):

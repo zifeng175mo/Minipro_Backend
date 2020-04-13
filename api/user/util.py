@@ -2,7 +2,7 @@ from user.models import User, Dynamics, DynamicsPicture, Comment, Gone
 import random
 
 
-def get_page(query, page: int, page_size: int = 3) -> (all, int):
+def get_page(query, page: int, page_size: int = 4) -> (all, int):
     page = int(page)
     total_page = len(query) / page_size
     if total_page % 1 > 0:
