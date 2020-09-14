@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate
 from django.db.models import Q
 from django.http import JsonResponse
 from datetime import datetime
+from django.views.decorators.csrf import csrf_exempt
 
 from project.settings import MEDIA_ROOT
 from user.util import get_page, judge_allgone, generate_random_str
@@ -56,7 +57,7 @@ def get_userinfo(request):
     info = requests.get(info_url)     
     return JsonResponse({'data': info.json(), 'status': True})  
 
-
+@csrf_exempt
 def get_token(request):
     data = json.loads(request.body)
     appid = data.get('appid')
